@@ -1,0 +1,195 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Swagger Title",
+    "description": "설명!!",
+    "contact": {
+      "name": "사용자명",
+      "url": "url",
+      "email": "ih.park@fusionsoft.co.kr"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://springdoc.org"
+    },
+    "version": "v2"
+  },
+  "externalDocs": {
+    "description": "더 많은 문서 보기",
+    "url": "https://swagger.io/docs/"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "로컬 서버"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Memo",
+      "description": "메모 관련 API"
+    }
+  ],
+  "paths": {
+    "/api/memo/modifyMemo": {
+      "put": {
+        "tags": [
+          "Memo"
+        ],
+        "summary": "메모 수정",
+        "description": "메모 내용 수정 .",
+        "operationId": "modifyMemo",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemoDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/memo/insertMemo": {
+      "post": {
+        "tags": [
+          "Memo"
+        ],
+        "summary": "메모 생성",
+        "description": "새로운 메모를 저장합니다.",
+        "operationId": "insertMemo",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemoDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/memo/getMemoList": {
+      "get": {
+        "tags": [
+          "Memo"
+        ],
+        "summary": "전체 메모 조회",
+        "description": "저장된 모든 메모를 조회합니다.",
+        "operationId": "getMemos",
+        "responses": {
+          "500": {
+            "description": "서버 오류",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MemoDto"
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "성공적으로 조회됨",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MemoDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/memo/deleteMemo": {
+      "delete": {
+        "tags": [
+          "Memo"
+        ],
+        "summary": "메모 삭제",
+        "description": "메모 삭제 .",
+        "operationId": "deleteMemo",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemoDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "MemoDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "메모 ID",
+            "format": "int64",
+            "example": 1,
+            "default": 1
+          },
+          "content": {
+            "type": "string",
+            "description": "메모 내용",
+            "example": "Memo Swagger Test!",
+            "enum": [
+              "메모1",
+              "메모2"
+            ]
+          }
+        },
+        "description": "삭제할 메모 정보"
+      }
+    }
+  }
+}

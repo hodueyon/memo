@@ -1,0 +1,31 @@
+server:
+  port: 8080
+
+springdoc:
+  api-docs:
+    path: /api-docs
+    default-consumes-media-type: application/json;charset=UTF-8  #기본 요청 데이터 포맷 지정 - > json으로 세팅
+    default-produces-media-type: application/json;charset=UTF-8  #기본 응답 데이터 포맷 지정 - > json으로 세팅
+  swagger-ui:
+    path: /swagger-ui.html
+    filter : true
+    operation-sorter : alpha #알파벳 순서로 정렬 , method - delete -> get -> post ->put 순서로 정렬
+    display-request-duration: true #응답시간
+  #api 그룹핑 -> 서비스 별 그룹화
+      #group-configs:
+      #- group: memo-api
+      #paths-to-match: /memos/**
+      #- group: users-api
+    #paths-to-match: /users/**
+
+
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
