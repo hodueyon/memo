@@ -53,7 +53,7 @@ public class MemoController {
                     required = true,
                     example = "1"
             )
-            @PathVariable Long id,
+            @PathVariable Integer id,
             @Parameter(
                     name = "includeDetails",
                     description = "상세 정보를 포함할지 여부",

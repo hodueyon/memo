@@ -19,13 +19,13 @@ public class MemoServiceImpl implements MemoService {
 
     @Override
     public MemoDto createMemo(MemoDto memoDto) {
-        memoDto.setId(idCounter.incrementAndGet());
-        memoList.add(memoDto);
+        //memoDto.setId(idCounter.incrementAndGet());
+        //memoList.add(memoDto);
         return memoDto;
     }
 
     @Override
-    public MemoDto getMemo(Long id) {
+    public MemoDto getMemo(Integer id) {
         MemoDto resultMemo = new MemoDto();
         String content = id == 1 ? "1번글" : "1번글 아님";
         resultMemo.setId(id);

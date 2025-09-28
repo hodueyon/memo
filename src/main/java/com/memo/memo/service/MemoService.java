@@ -7,5 +7,5 @@ import java.util.List;
 public interface MemoService {
     List<MemoDto> getAllMemos();
     MemoDto createMemo(MemoDto memoDto);
-    MemoDto getMemo(Long id);
+    MemoDto getMemo(Integer id);
 }

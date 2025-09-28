@@ -27,7 +27,7 @@ public class MemoSwaggerConfig {
                         .license(new License().name("Apache 2.0").url("http://springdoc.org"))
                 )
                 .servers(List.of(
-                        new Server().url("http://localhost:8080").description("로컬 서버")
+                        new Server().url("http://localhost:8081").description("로컬 서버")
                 ))
                 .externalDocs(new ExternalDocumentation()
                         .description("더 많은 문서 보기")

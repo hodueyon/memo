@@ -20,14 +20,22 @@
   },
   "servers": [
     {
-      "url": "http://localhost:8080",
+      "url": "http://localhost:8081",
       "description": "로컬 서버"
     }
   ],
   "tags": [
     {
+      "name": "User v1",
+      "description": "회원 API v1"
+    },
+    {
       "name": "Memo",
       "description": "메모 관련 API"
+    },
+    {
+      "name": "users v2",
+      "description": "회원 API v2"
     }
   ],
   "paths": {
@@ -39,6 +47,84 @@
         "summary": "메모 수정",
         "description": "메모 내용 수정 .",
         "operationId": "modifyMemo",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemoDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "성공적으로 수정됨",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "서버 오류",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/memos": {
+      "get": {
+        "tags": [
+          "Memo"
+        ],
+        "summary": "전체 메모 조회",
+        "description": "저장된 모든 메모를 조회합니다.",
+        "operationId": "getMemos",
+        "responses": {
+          "200": {
+            "description": "성공적으로 조회됨",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MemoDto"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "서버 오류",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MemoDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Memo"
+        ],
+        "summary": "메모 생성",
+        "description": "새로운 메모를 저장합니다.",
+        "operationId": "createMemo",
         "requestBody": {
           "content": {
             "application/json": {
@@ -83,7 +169,178 @@
         },
         "responses": {
           "200": {
+            "description": "성공적으로 저장됨",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "서버 오류",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/users": {
+      "get": {
+        "tags": [
+          "users v2"
+        ],
+        "summary": "v2 - 전체 회원 조회",
+        "operationId": "getUsers",
+        "responses": {
+          "200": {
             "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users": {
+      "get": {
+        "tags": [
+          "User v1"
+        ],
+        "summary": "전체 회원 조회",
+        "operationId": "getUsers_1",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/memos/{id}": {
+      "get": {
+        "tags": [
+          "Memo",
+          "Memo API"
+        ],
+        "summary": "메모 단건 조회",
+        "description": "메모 ID를 이용해 특정 메모를 조회합니다.",
+        "operationId": "getMemoById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "조회할 메모의 고유 ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          },
+          {
+            "name": "includeDetails",
+            "in": "query",
+            "description": "상세 정보를 포함할지 여부",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            },
+            "example": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공적으로 메모를 조회했습니다.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "잘못된 요청입니다.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "메모를 찾을 수 없습니다.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "서버 오류입니다.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/memo/getMemo": {
+      "get": {
+        "tags": [
+          "Memo"
+        ],
+        "summary": "단일 메모 조회",
+        "description": "단일 메모.",
+        "operationId": "getMemo",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공적으로 조회됨",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "서버 오류",
             "content": {
               "*/*": {
                 "schema": {
@@ -102,23 +359,35 @@
         ],
         "summary": "전체 메모 조회",
         "description": "저장된 모든 메모를 조회합니다.",
-        "operationId": "getMemos",
+        "operationId": "getMemos_1",
         "responses": {
-          "500": {
-            "description": "서버 오류",
+          "200": {
+            "description": "성공적으로 조회됨",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/MemoDto"
+                  "$ref": "#/components/schemas/MemoDto"
+                },
+                "examples": {
+                  "메모 리스트 예제": {
+                    "description": "메모 리스트 예제",
+                    "value": [
+                      {
+                        "id": 1,
+                        "content": "Test Memo 1"
+                      },
+                      {
+                        "id": 2,
+                        "content": "Test Memo 2"
+                      }
+                    ]
                   }
                 }
               }
             }
           },
-          "200": {
-            "description": "성공적으로 조회됨",
+          "500": {
+            "description": "서버 오류",
             "content": {
               "*/*": {
                 "schema": {
@@ -153,7 +422,17 @@
         },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "성공적으로 삭제됨",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "서버 오류",
             "content": {
               "*/*": {
                 "schema": {
@@ -174,7 +453,7 @@
           "id": {
             "type": "integer",
             "description": "메모 ID",
-            "format": "int64",
+            "format": "int32",
             "example": 1,
             "default": 1
           },
@@ -188,7 +467,7 @@
             ]
           }
         },
-        "description": "삭제할 메모 정보"
+        "description": "메모 정보를 담는 DTO"
       }
     }
   }
